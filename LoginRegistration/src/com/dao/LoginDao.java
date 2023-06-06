@@ -10,7 +10,7 @@ import com.model.Login;
 
 public class LoginDao {
 
-	private String jdbcURL = "jdbc:mysql://localhost:3306/training?useSSL=false";
+	private String jdbcURL = "jdbc:mysql://localhost:3306/userdb?useSSL=false";
 	private String jdbcname = "root";
 	private String jdbcPassword = "root";
 

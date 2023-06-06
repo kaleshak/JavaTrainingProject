@@ -45,7 +45,7 @@ public class LoginController extends HttpServlet {
             if (loginDao.validate(login) != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("name", name);
-                session.setMaxInactiveInterval(30);
+                session.setMaxInactiveInterval(5);
                 response.sendRedirect("list");
             } else {
                 request.setAttribute("INVALID", "Invalid Credentials Or Please SignUp!");
