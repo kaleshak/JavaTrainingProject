@@ -12,10 +12,11 @@
 <body>
 
 <%
-response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 
-if(session.getAttribute("name")== null){
-	request.getRequestDispatcher("login.jsp");
+if (session.getAttribute("name") == null) {
+    response.sendRedirect("login.jsp");
+    return; 
 }
 %>
 	<header>
@@ -68,9 +69,9 @@ if(session.getAttribute("name")== null){
 							<td><c:out value="${user.email}" /></td>
 							<td><c:out value="${user.country}" /></td>
 							<td><c:out value="${user.password}" /></td>
-							<td><a href="edit?id=<c:out value='${user.id}' />">
+							<td><a href="edit?id=<c:out value='${user.id}'/>" class="text-decoration-none">
 									<button class="btn btn-primary">Update</button>
-							</a> <a href="delete?id=<c:out value='${user.id}' />">
+							</a> <a href="delete?id=<c:out value='${user.id}'/>"class="text-decoration-none">
 									<button class="btn btn-danger">Delete</button>
 							</a></td>
 						</tr>

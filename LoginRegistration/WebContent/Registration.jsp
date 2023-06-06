@@ -9,7 +9,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-
 	<header>
 		<nav
 			class="navbar navbar-expand-md navbar-dark justify-content-between"

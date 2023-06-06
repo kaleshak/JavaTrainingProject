@@ -15,53 +15,45 @@ import com.model.Login;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private LoginDao loginDao;
+    private LoginDao loginDao;
 
-	public void init() {
-		loginDao = new LoginDao();
-	}
+    public void init() {
+        loginDao = new LoginDao();
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doPost(request, response);
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doPost(request, response);
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        authenticate(request, response);
+    }
 
-		authenticate(request, response);
+    private void authenticate(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        Login login = new Login();
+        login.setName(name);
+        login.setPassword(password);
 
-	}
-
-	private void authenticate(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		Login login = new Login();
-		login.setName(name);
-		login.setPassword(password);
-		
-		try {
-			if (loginDao.validate(login)!= null) {
-				
-				HttpSession session = request.getSession();
-				session.setMaxInactiveInterval(1*30	);
-				session.setAttribute("name", name);
-				
-				request.getRequestDispatcher("list").forward(request, response);
-
-
-			} 
-			else {
-				request.setAttribute("INVALID", "Invalid Credentials Or Please SignUp!");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-				dispatcher.forward(request, response);
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
+        try {
+            if (loginDao.validate(login) != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("name", name);
+                session.setMaxInactiveInterval(30);
+                response.sendRedirect("list");
+            } else {
+                request.setAttribute("INVALID", "Invalid Credentials Or Please SignUp!");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+                dispatcher.forward(request, response);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
